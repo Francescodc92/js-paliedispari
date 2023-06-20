@@ -27,3 +27,12 @@ p#display {
   text-align: center;
   margin-top: 3.125rem;
 }
+
+hi.title {
+  text-align: center;
+}
+
+p.game-rules {
+  max-width: 37.5rem;
+  margin: 1.25rem auto;
+}

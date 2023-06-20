@@ -55,7 +55,7 @@ formElement.addEventListener("submit", (e) => {
   const verificateUserWord = parseInt(inputUserWord.value)
   if (isNaN(verificateUserWord) && userWord != "") {
     displayElement.innerHTML = itsPalindrome(userWord)
-    displayElement.style.color = "#000"
+    displayElement.style.color = "blue"
   } else {
     displayElement.innerHTML = "inserisci una parola valida"
     displayElement.style.color = "red"
