@@ -17,11 +17,22 @@ RAGIONAMEMTO BASE
 3. dare inizio alla funzione al click di un button per evitare che la funzione parta con valore undefined 
 */
 
-const startButton = document.getElementById("start-button")
-
+const formElement = document.getElementById("form-element")
+const inputUserWord = document.getElementById("user-word")
+const displayElement = document.getElementById("display")
 const itsPalindrome = (userWord) => {
-  const wordArray = userWord.split("")
-  console.log(wordArray)
+  // il replace non è farina del mio sacco , ho fatto la domanda a chatgpt , ho capito cosa ha fatto dalla spiegazione ma francamente non avrei saputo farlo da solo
+  const userWordString = String(userWord)
+    .toLowerCase()
+    .replace(/[àáâãäå]/g, "a")
+    .replace(/[èéêë]/g, "e")
+    .replace(/[ìíîï]/g, "i")
+    .replace(/[òóôõö]/g, "o")
+    .replace(/[ùúûü]/g, "u")
+    .replace(/[ç]/g, "c")
+    .replace(/\s/g, "")
+
+  const wordArray = userWordString.split("")
   let reverseWordArray = []
   for (let i = wordArray.length - 1; i >= 0; i--) {
     reverseWordArray.push(wordArray[i])
@@ -31,14 +42,22 @@ const itsPalindrome = (userWord) => {
     reverseWord += element
   })
 
-  if (reverseWord == userWord) {
-    return reverseWord + " " + "la parola è palindroma"
+  if (reverseWord == userWordString) {
+    return userWord + " " + "è una parola palindroma"
   }
 
-  return reverseWord + " " + "la parola non è palindroma"
+  return userWord + " " + "non è una parola palindroma"
 }
 
-startButton.addEventListener("click", () => {
-  const userWord = prompt("Digita la parola da verificare")
-  console.log(itsPalindrome(userWord))
+formElement.addEventListener("submit", (e) => {
+  e.preventDefault()
+  const userWord = inputUserWord.value
+  const verificateUserWord = parseInt(inputUserWord.value)
+  if (isNaN(verificateUserWord) && userWord != "") {
+    displayElement.innerHTML = itsPalindrome(userWord)
+    displayElement.style.color = "#000"
+  } else {
+    displayElement.innerHTML = "inserisci una parola valida"
+    displayElement.style.color = "red"
+  }
 })
