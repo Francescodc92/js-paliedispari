@@ -19,16 +19,17 @@ RAGIONAMENTO BASE
 */
 
 const formElement = document.querySelector("#form-element")
+const resultDisplay = document.getElementById("result-display")
 const numerUserInput = document.getElementById("user-number")
 const predictionUserInput = document.getElementById("user-prediction")
-
+const predictionHelper = document.querySelector(".user-prediction")
+const numberHelper = document.querySelector(".user-number")
 const randomPcNumber = () => {
   const randomNumber = Math.floor(Math.random() * (6 - 1) + 1)
   return randomNumber
 }
 
 const sum = (userNumber, pcNumber) => {
-  console.log(userNumber + pcNumber)
   return userNumber + pcNumber
 }
 
@@ -41,13 +42,17 @@ const isEven = (sumValue) => {
 
 const winner = (userPrediction, isEvenReturn) => {
   if (isEvenReturn && userPrediction == "pari") {
-    console.log("è pari ", "giocatore pari", "giocatore ha vinto")
+    resultDisplay.style.color = "green"
+    return "giocatore ha vinto"
   } else if (!isEvenReturn && userPrediction == "dispari") {
-    console.log("è dispari ", "giocatore dispari", "giocatore ha vinto")
+    resultDisplay.style.color = "green"
+    return "giocatore ha vinto"
   } else if (isEvenReturn && userPrediction == "dispari") {
-    console.log("è pari ", "giocatore dispari", "pc ha vinto")
+    resultDisplay.style.color = "red"
+    return "pc ha vinto"
   } else if (!isEvenReturn && userPrediction == "pari") {
-    console.log("è dispari ", "giocatore pari", "pc ha vinto")
+    resultDisplay.style.color = "red"
+    return "pc ha vinto"
   }
 }
 
@@ -62,16 +67,30 @@ formElement.addEventListener("submit", (e) => {
       if (userPrediction != "") {
         const sumValue = sum(userNumber, pcNumber)
         const isEvenReturn = isEven(sumValue)
-        winner(userPrediction, isEvenReturn)
+        resultDisplay.innerHTML = ""
+        resultDisplay.innerHTML =
+          "la somma è" +
+          " " +
+          sumValue +
+          " " +
+          winner(userPrediction, isEvenReturn)
+        predictionUserInput.style.border = "1px solid #ccc"
+        predictionHelper.style.color = "black"
       } else {
-        console.log(" inserisci pari o dispari nell'input")
+        predictionUserInput.style.border = "1px solid red"
+        predictionHelper.style.color = "red"
+        //cambio il colore del bordo del input
       }
+      numerUserInput.style.border = "1px solid #ccc"
+      numberHelper.style.color = "black"
     } else {
-      console.log("inserisci un valore da 1 a 5")
+      numerUserInput.style.border = "1px solid red"
+      numberHelper.style.color = "red"
       //cambio il colore del bordo del input
     }
   } else {
-    console.log("inserisci un valore valido")
+    numerUserInput.style.border = "1px solid red"
+    numberHelper.style.color = "red"
     // cambio il colore del bordo del input
   }
 })
